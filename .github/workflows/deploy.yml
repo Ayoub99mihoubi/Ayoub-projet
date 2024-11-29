@@ -1,0 +1,22 @@
+name: Deploy to Firebase Hosting
+
+on:
+  push:
+    branches:
+      - main  # This will trigger the workflow on every push to the 'main' branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Runs the job on the latest version of Ubuntu
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2  # Check out the code from the repository
+
+    - name: Set up Firebase CLI
+      uses: wzieba/Firebase-Action@v2  # This sets up Firebase CLI
+      with:
+        firebase_service_account: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}  # Use the service account secret
+
+    - name: Deploy to Firebase Hosting
+      run: firebase deploy --only hosting  # Deploy to Firebase Hosting
